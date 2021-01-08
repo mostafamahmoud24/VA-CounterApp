@@ -3,6 +3,7 @@ import {
   DECREMENT_NUM,
   RESET,
   RESET_MODAL,
+  OPEN_MODAL,
   SET_SLIDER_COUNT,
 } from "../constants/ActionTypes";
 
@@ -15,6 +16,7 @@ export default function reducer(
     tempReveseCounter: 0,
     consecutiveIncrementPresses: 0,
     consecutiveDecrementPresses: 0,
+    modalIsOpen: false,
   },
   action
 ) {
@@ -101,7 +103,22 @@ export default function reducer(
         ...state,
         consecutiveIncrementPresses: 0,
         consecutiveDecrementPresses: 0,
+        modalIsOpen: false,
       });
+    case OPEN_MODAL:
+      if (
+        state.consecutiveIncrementPresses >= 3 &&
+        state.consecutiveIncrementPresses % 2 != 0 &&
+        state.consecutiveDecrementPresses ==
+          state.consecutiveIncrementPresses + 1
+      ) {
+        return (state = {
+          ...state,
+          modalIsOpen: true,
+        });
+      } else {
+        return state;
+      }
     case SET_SLIDER_COUNT:
       return (state = {
         ...state,

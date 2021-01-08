@@ -3,6 +3,7 @@ import {
   DECREMENT_NUM,
   RESET,
   RESET_MODAL,
+  OPEN_MODAL,
   SET_SLIDER_COUNT,
 } from "../constants/ActionTypes";
 
@@ -21,6 +22,12 @@ export function decrementNum() {
 export function resetNum() {
   return {
     type: RESET,
+  };
+}
+
+export function openModal() {
+  return {
+    type: OPEN_MODAL,
   };
 }
 

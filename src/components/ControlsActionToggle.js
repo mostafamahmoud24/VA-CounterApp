@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
+import { useDispatch, useSelector } from "react-redux";
 import { incrementNum, decrementNum } from "./../actions/counterActions";
 
 export default function Toggle(props) {
@@ -12,7 +12,16 @@ export default function Toggle(props) {
 
   const dispatch = useDispatch();
 
-  const incrementHandleChange = (event) => {
+  const counter = useSelector((state) => state.count);
+
+  useEffect(() => {
+    if (counter.modalIsOpen) {
+      setToggle({ increment: false, decrement: false });
+      clearInterval(decreaseInterval);
+    }
+  }, [counter]);
+
+  const incrementHandleChange = () => {
     setToggle({ increment: !toggle.increment, decrement: false });
 
     if (!toggle.increment) {
@@ -21,7 +30,7 @@ export default function Toggle(props) {
     } else clearInterval(increaseInterval);
   };
 
-  const decrementHandleChange = (event) => {
+  const decrementHandleChange = () => {
     setToggle({ increment: false, decrement: !toggle.decrement });
 
     if (!toggle.decrement) {

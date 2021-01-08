@@ -7,7 +7,7 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import { useDispatch, useSelector } from "react-redux";
-import { resetModal } from "../actions/counterActions";
+import { resetModal, openModal } from "../actions/counterActions";
 
 const styles = (theme) => ({
   root: {
@@ -54,15 +54,13 @@ export default function Modal() {
   const counter = useSelector((state) => state.count);
 
   useEffect(() => {
-    if (
-      counter.consecutiveIncrementPresses >= 3 &&
-      counter.consecutiveIncrementPresses % 2 != 0 &&
-      counter.consecutiveDecrementPresses ==
-        counter.consecutiveIncrementPresses + 1
-    ) {
+    if (counter.modalIsOpen) {
       setOpen(true);
+    } else {
+      dispatch(openModal());
     }
   }, [counter]);
+
   const handleClose = () => {
     setOpen(false);
     dispatch(resetModal());
