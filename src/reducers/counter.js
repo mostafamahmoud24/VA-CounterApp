@@ -65,13 +65,27 @@ export default function reducer(
           };
         }
       } else {
-        return {
-          ...state,
-          counter: state.counter - state.slider_value,
-          numberOfRequests: state.numberOfRequests + 1,
-          tempReveseCounter: state.tempReveseCounter + state.slider_value,
-          consecutiveDecrementPresses: state.consecutiveDecrementPresses + 1,
-        };
+        if (
+          state.consecutiveIncrementPresses >= 3 &&
+          state.consecutiveIncrementPresses % 2 != 0
+        ) {
+          return {
+            ...state,
+            counter: state.counter - state.slider_value,
+            numberOfRequests: state.numberOfRequests + 1,
+            tempReveseCounter: state.tempReveseCounter + state.slider_value,
+            consecutiveDecrementPresses: state.consecutiveDecrementPresses + 1,
+          };
+        } else {
+          return {
+            ...state,
+            counter: state.counter - state.slider_value,
+            numberOfRequests: state.numberOfRequests + 1,
+            tempReveseCounter: state.tempReveseCounter + state.slider_value,
+            consecutiveDecrementPresses: state.consecutiveDecrementPresses + 1,
+            consecutiveIncrementPresses: 0,
+          };
+        }
       }
     case RESET:
       return (state = {

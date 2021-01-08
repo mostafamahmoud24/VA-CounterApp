@@ -80,8 +80,9 @@ export default function Modal() {
         </DialogTitle>
         <DialogContent dividers>
           <Typography gutterBottom>
-            You pressed increment {counter.consecutiveIncrementPresses} times
-            followed by decrement {counter.consecutiveDecrementPresses} times
+            You are seeing this message because you pressed increment{" "}
+            {counter.consecutiveIncrementPresses} times followed by decrement{" "}
+            {counter.consecutiveDecrementPresses} times.
           </Typography>
         </DialogContent>
       </Dialog>
