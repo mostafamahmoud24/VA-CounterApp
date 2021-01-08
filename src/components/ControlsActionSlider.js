@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useDispatch } from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
 import { sliderNum } from "../actions/counterActions";
@@ -40,6 +40,7 @@ export default function ControlActionSlider(props) {
         valueLabelDisplay="auto"
         marks={marks}
         min={1}
+        disabled={!props.active}
       />
     </div>
   );

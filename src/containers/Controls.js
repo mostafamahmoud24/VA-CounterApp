@@ -23,7 +23,7 @@ export const mapDispatchToProps = (dispatch) => {
       dispatch(decrementNum());
     },
     reset: () => {
-      dispatch(resetNum(0));
+      dispatch(resetNum());
     },
   };
 };

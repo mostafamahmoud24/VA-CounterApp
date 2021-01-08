@@ -1,37 +1,50 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Controls from "../containers/Controls";
 
 class Counter extends Component {
   render() {
-    const { count, active, counterType } = this.props;
+    const { count, counterType } = this.props;
 
     let styles = { borderRadius: "5px" };
     let reverseStyles = { borderRadius: "5px" };
 
+    //changing the counter background to shades of green (for positive values) or red (for negative values) depending on value
     if (count.counter == 0) {
       styles = {
         ...styles,
         background: `rgba(0,0,0,0)`,
       };
-      reverseStyles = styles;
-    } else if (count.counter < 0) {
+    } else if (count.counter > 0) {
       styles = {
         ...styles,
-        background: `rgba(${155 + count.counter},0,0,1)`,
-      };
-      reverseStyles = {
-        ...styles,
-        background: `rgba(0,${155 + count.reverseCounter * -1},0,1)`,
+        background: `rgba(0,${50 + count.counter},0,1)`,
+        color: "white",
       };
     } else {
       styles = {
         ...styles,
-        background: `rgba(0,${155 + count.counter},0,1)`,
+        background: `rgba(${50 + count.counter * -1},0,0,1)`,
+        color: "white",
       };
+    }
+
+    //changing the reverse counter background to shades of green (for positive values) or red (for negative values) depending on value
+    if (count.reverseCounter == 0) {
       reverseStyles = {
-        ...styles,
-        background: `rgba(${155 + count.counter},0,0,1)`,
+        ...reverseStyles,
+        background: `rgba(0,0,0,0)`,
+      };
+    } else if (count.reverseCounter > 0) {
+      reverseStyles = {
+        ...reverseStyles,
+        background: `rgba(0,${50 + count.reverseCounter},0,1)`,
+        color: "white",
+      };
+    } else {
+      reverseStyles = {
+        ...reverseStyles,
+        background: `rgba(${50 + count.reverseCounter * -1},0,0,1)`,
+        color: "white",
       };
     }
 
@@ -44,7 +57,6 @@ class Counter extends Component {
         >
           {counterType == "counter" ? count.counter : count.reverseCounter}
         </div>
-        <Controls active={active} />
       </div>
     );
   }

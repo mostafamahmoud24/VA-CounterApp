@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import ControlsActionButton from "./ControlsActionButton";
 
@@ -14,6 +13,24 @@ class Controls extends Component {
       resetLabel,
       active,
     } = this.props;
+
+    let map = {};
+    document.addEventListener("keydown", function (e) {
+      map[e.key] = true;
+      if (map["Control"] && map["ArrowRight"] && active == true) {
+        increment();
+      }
+      if (map["Control"] && map["ArrowLeft"] && active == true) {
+        decrement();
+      }
+      if (map["Control"] && map["ArrowUp"] && active == true) {
+        reset();
+      }
+    });
+
+    document.addEventListener("keyup", function (e) {
+      map[e.key] = false;
+    });
 
     return (
       <div>

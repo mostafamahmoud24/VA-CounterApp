@@ -5,7 +5,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import { incrementNum, decrementNum } from "./../actions/counterActions";
 
-export default function Toggle() {
+export default function Toggle(props) {
   const [toggle, setToggle] = useState({ increment: false, decrement: false });
   const [increaseInterval, setIncreaseInterval] = useState(null);
   const [decreaseInterval, setDecreaseInterval] = useState(null);
@@ -43,6 +43,7 @@ export default function Toggle() {
               onChange={incrementHandleChange}
               name="increment"
               color="primary"
+              disabled={!props.active}
             />
           }
           label="Auto Increment"
@@ -55,6 +56,7 @@ export default function Toggle() {
               checked={toggle.decrement}
               onChange={decrementHandleChange}
               name="decrement"
+              disabled={!props.active}
             />
           }
           label="Auto Decrement"
