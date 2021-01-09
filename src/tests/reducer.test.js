@@ -4,6 +4,8 @@ import {
   INCREMENT_NUM,
   DECREMENT_NUM,
   RESET,
+  OPEN_MODAL,
+  RESET_MODAL,
   SET_SLIDER_COUNT,
 } from "../constants/ActionTypes";
 
@@ -17,6 +19,9 @@ describe("Counter reducer", () => {
       reverseCounter: 0,
       numberOfRequests: 0,
       tempReveseCounter: 0,
+      consecutiveIncrementPresses: 0,
+      consecutiveDecrementPresses: 0,
+      modalIsOpen: false,
     };
   });
 
@@ -27,6 +32,9 @@ describe("Counter reducer", () => {
       reverseCounter: 0,
       numberOfRequests: 0,
       tempReveseCounter: 0,
+      consecutiveIncrementPresses: 0,
+      consecutiveDecrementPresses: 0,
+      modalIsOpen: false,
     });
   });
 
@@ -41,6 +49,9 @@ describe("Counter reducer", () => {
       reverseCounter: 0,
       numberOfRequests: 1,
       tempReveseCounter: -1,
+      consecutiveIncrementPresses: 1,
+      consecutiveDecrementPresses: 0,
+      modalIsOpen: false,
     });
   });
 
@@ -51,6 +62,9 @@ describe("Counter reducer", () => {
       reverseCounter: -10,
       numberOfRequests: 1,
       tempReveseCounter: -1,
+      consecutiveIncrementPresses: 1,
+      consecutiveDecrementPresses: 0,
+      modalIsOpen: false,
     };
     expect(
       reducer(state, {
@@ -62,6 +76,9 @@ describe("Counter reducer", () => {
       reverseCounter: -10,
       slider_value: 1,
       tempReveseCounter: -2,
+      consecutiveIncrementPresses: 2,
+      consecutiveDecrementPresses: 0,
+      modalIsOpen: false,
     });
   });
 
@@ -76,6 +93,9 @@ describe("Counter reducer", () => {
       reverseCounter: 0,
       numberOfRequests: 1,
       tempReveseCounter: 1,
+      consecutiveIncrementPresses: 0,
+      consecutiveDecrementPresses: 1,
+      modalIsOpen: false,
     });
   });
 
@@ -88,6 +108,9 @@ describe("Counter reducer", () => {
           reverseCounter: 0,
           numberOfRequests: 1,
           tempReveseCounter: 1,
+          consecutiveIncrementPresses: 0,
+          consecutiveDecrementPresses: 1,
+          modalIsOpen: false,
         },
         {
           type: DECREMENT_NUM,
@@ -99,8 +122,12 @@ describe("Counter reducer", () => {
       reverseCounter: 0,
       numberOfRequests: 2,
       tempReveseCounter: 6,
+      consecutiveIncrementPresses: 0,
+      consecutiveDecrementPresses: 2,
+      modalIsOpen: false,
     });
   });
+
   it("should reset the counter", () => {
     expect(
       reducer(
@@ -110,6 +137,9 @@ describe("Counter reducer", () => {
           reverseCounter: 0,
           numberOfRequests: 1,
           tempReveseCounter: 1,
+          consecutiveIncrementPresses: 0,
+          consecutiveDecrementPresses: 1,
+          modalIsOpen: false,
         },
         {
           type: RESET,
@@ -121,8 +151,12 @@ describe("Counter reducer", () => {
       reverseCounter: 0,
       numberOfRequests: 1,
       tempReveseCounter: 0,
+      consecutiveIncrementPresses: 0,
+      consecutiveDecrementPresses: 0,
+      modalIsOpen: false,
     });
   });
+
   it("should adjust the step size when you adjust the slider", () => {
     expect(
       reducer(initState, {
@@ -134,6 +168,7 @@ describe("Counter reducer", () => {
       slider_value: 50,
     });
   });
+
   it("should change the reverse counter value when it exceeds 10 requests", () => {
     expect(
       reducer(
@@ -143,6 +178,9 @@ describe("Counter reducer", () => {
           reverseCounter: 0,
           numberOfRequests: 10,
           tempReveseCounter: 1,
+          consecutiveIncrementPresses: 0,
+          consecutiveDecrementPresses: 1,
+          modalIsOpen: false,
         },
         {
           type: INCREMENT_NUM,
@@ -154,6 +192,67 @@ describe("Counter reducer", () => {
       reverseCounter: 1,
       numberOfRequests: 1,
       tempReveseCounter: -4,
+      consecutiveIncrementPresses: 1,
+      consecutiveDecrementPresses: 0,
+      modalIsOpen: false,
+    });
+  });
+
+  it("should set modalIsOpen to true when increment is presses an odd number of times followed by decrement the same number of times plus one", () => {
+    expect(
+      reducer(
+        {
+          counter: 3,
+          slider_value: 1,
+          reverseCounter: 0,
+          numberOfRequests: 7,
+          tempReveseCounter: -4,
+          consecutiveIncrementPresses: 3,
+          consecutiveDecrementPresses: 4,
+          modalIsOpen: false,
+        },
+        {
+          type: OPEN_MODAL,
+        }
+      )
+    ).toMatchObject({
+      counter: 3,
+      slider_value: 1,
+      reverseCounter: 0,
+      numberOfRequests: 7,
+      tempReveseCounter: -4,
+      consecutiveIncrementPresses: 3,
+      consecutiveDecrementPresses: 4,
+      modalIsOpen: true,
+    });
+  });
+
+  it("should reset modalIsOpen to false when closing the modal", () => {
+    expect(
+      reducer(
+        {
+          counter: 3,
+          slider_value: 1,
+          reverseCounter: 0,
+          numberOfRequests: 7,
+          tempReveseCounter: -4,
+          consecutiveIncrementPresses: 3,
+          consecutiveDecrementPresses: 4,
+          modalIsOpen: true,
+        },
+        {
+          type: RESET_MODAL,
+        }
+      )
+    ).toMatchObject({
+      counter: 3,
+      slider_value: 1,
+      reverseCounter: 0,
+      numberOfRequests: 7,
+      tempReveseCounter: -4,
+      consecutiveIncrementPresses: 0,
+      consecutiveDecrementPresses: 0,
+      modalIsOpen: false,
     });
   });
 });

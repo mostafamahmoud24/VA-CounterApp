@@ -2,6 +2,8 @@ import {
   incrementNum,
   decrementNum,
   resetNum,
+  openModal,
+  resetModal,
   sliderNum,
 } from "../actions/counterActions";
 
@@ -9,6 +11,8 @@ import {
   INCREMENT_NUM,
   DECREMENT_NUM,
   RESET,
+  RESET_MODAL,
+  OPEN_MODAL,
   SET_SLIDER_COUNT,
 } from "../constants/ActionTypes";
 
@@ -38,5 +42,19 @@ test("Slider counter action creator", () => {
   expect(res).toEqual({
     type: SET_SLIDER_COUNT,
     payload: 1,
+  });
+});
+
+test("Open modal action creator", () => {
+  let res = openModal();
+  expect(res).toEqual({
+    type: OPEN_MODAL,
+  });
+});
+
+test("Reset modal action creator", () => {
+  let res = resetModal();
+  expect(res).toEqual({
+    type: RESET_MODAL,
   });
 });
